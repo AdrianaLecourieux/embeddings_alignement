@@ -1,6 +1,6 @@
 # embeddings_alignement
 
-## To begining
+## To beginning
 
 Pour pouvoir faire tourner le programme, il faut dans un premier temps avec python. Pour télécharger python : XXX. La version utilisée pour réaliser ce projet est la XXXX.
 You also need to install Miniconda an Mamba :
