@@ -1,0 +1,6 @@
+name: embeddings
+channels:
+    - defaults
+dependencies:
+    - numpy=1.21
+
