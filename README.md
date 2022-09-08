@@ -1,4 +1,4 @@
-# Short project : embeddings_alignement
+# Short project : Embeddings alignment
 
 Le but de ce projet est de crée un programme d'alignement d'embeddings par programmation dynamique
 
