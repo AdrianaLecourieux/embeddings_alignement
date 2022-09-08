@@ -1,41 +1,45 @@
 # Source file
 
+
+# Read the script arguments
+
+import sys # to interact with arguments
+
+def read_arg(seq1, seq2): 
+    if seq1.endswith(".t5emb") or seq2.endswith(".t5emb") != True: 
+        # Check the file extension
+        print("ERROR : The two first arguments need to be .t5emb sequences")
+    # if the extension is good, check if the dot product file exists
+    else: 
+    # call the check_dot_product function    
+        check_dot_product(seq1, seq2)
+        
+import os.path # to interact with the operating system
+
+def check_dot_product(emb1, emb2):
+    emb1split = os.path.splitext(emb1)
+    emb2split = os.path.splitext(emb2)
+    path_to_doproduct = f'../results/{emb1split[0]}__{emb2split[0]}.txt'
+    if os.path.exists(path_to_doproduct):
+        print("The dot product matrice exists")
+        go_to_alignement_matrice(emb1, emb2)
+    else:
+        print("The dot product matrice doesn't exist") 
+        go_to_dot_product(emb1, emb2) # 
+        
+           
+def go_to_dot_product(input1, input2):
+    print(input1, input2)
+
+def go_to_alignement_matrice(input1, input2):
+    print("coucou")
+
+if __name__ == '__main__':
+    read_arg(sys.argv[1], sys.argv[2])
+
+
+# Dot Product Calcul
 """
-with open("../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta") as f:
-    firstline = f.readline().rstrip()
-
-print(firstline)
-"""
-
-"""
-l1 = [1,2,3]
-l2 = [4,5,6]
-l3 = [7,8,9]
-
-seq1 = []
-seq1.append(l1)
-seq1.append(l2)
-seq1.append(l3)
-
-
-
-v1 = [1,2,3]
-v2 = [4,5,6]
-v3 = [7,8,9]
-
-seq2 = []
-seq2.append(v1)
-seq2.append(v2)
-seq2.append(v3)
-
-print(seq1, seq2)
-"""
-import numpy as np
-
-seq1 = [1,2,3]
-seq2 = [1,2,3]
-
-dotproduct = np.dot(seq1, seq2)
 
 def is_number(n): #verifie si c'est un nombre
     try:
@@ -58,7 +62,7 @@ for lineseq1 in seq1splitline:
         listseq = []
         listseq2 = []
         tmp = []
-        for x in lineseq1.split(' '): # découpe ligne sur les espaces
+        for x in lineseq1.split(' '): # découpe ligne sur les espaces #NE PAS PRECISER
             if is_number(x): # (le découpage est pas considéré comme float) check que c'est un nombre
                 tmp.append(float(x))
                 listseq.append(tmp)
@@ -73,33 +77,5 @@ for lineseq1 in seq1splitline:
     dotproductmatrix.append(dotproductline)
 print(dotproductmatrix)
 
-
-
 """
 
-listseq = []
-for y in lignes1:
-    tmp = []
-    for x in y.split(' '):
-        tmp.append(int(x))
-    listseq.append(tmp)
-print(listseq)
-
-
-
-
-lignes2 = seq2.read().splitlines()
-listseq2 = []
-for y in lignes2:
-    tmp2 = []
-    for x in y.split(' '):
-        tmp2.append(int(x))
-    listseq2.append(tmp2)
-print(listseq2)
-
-listetranspose = np.transpose(listseq2)
-
-dotproduct = np.dot(listseq, listetranspose)
-print(dotproduct)
-
-"""
