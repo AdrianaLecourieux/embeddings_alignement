@@ -3,44 +3,43 @@
 # This script contains the functions used from the beginning of the program to 
 # the alignement
 
-## Read the script arguments
+## --- Read the script arguments
 
-import sys # to interact with arguments
+import sys
+from turtle import shape # to interact with arguments
+import numpy as np
 
 def read_arg(seq1, seq2): 
     
-    if seq1.endswith(".t5emb") or seq2.endswith(".t5emb") != True: 
+    if not seq1.endswith(".t5emb") or not seq2.endswith(".t5emb"): 
         # Check the file extension
-        print("ERROR : The two first arguments need to be .t5emb sequences")
-    # if the extension is good, check if the dot product file exists
-    else: 
-        
-    # call the check_dot_product function    
-        check_dot_product(seq1, seq2)
-      
-
-
-
-## Check if the dot product matrix file exists
-
-import os.path # to interact with the operating system
-
-def check_dot_product(emb1, emb2):
-    emb1split = os.path.splitext(emb1)
-    emb2split = os.path.splitext(emb2)
-    path_to_doproduct = f'../results/{emb1split[0]}__{emb2split[0]}.txt'
+        print("ERROR : The two first arguments need to be .t5emb extension")
     
-    if os.path.exists(path_to_doproduct):
-        print("The dot product matrice exists")
-        go_to_alignement_matrice(emb1, emb2)
+    else: 
+        embedding1_list = read_embedding(seq1)
+        embedding2_list = read_embedding(seq2) 
+        dot_product(embedding1_list, embedding2_list)
+    return(embedding1_list, embedding2_list)
+    
+ 
+      
+def read_embedding(file):
+    embedding_list = []
+    with open(file, "r") as embedding:
         
-    else:
-        print("The dot product matrice doesn't exist") 
-        go_to_dot_product(emb1, emb2) # 
-        
-           
-def go_to_dot_product(input1, input2):
-    print(input1, input2)
+        for line in embedding:
+            
+            vector = line.split()
+            vector = [float(x) for x in vector]
+            embedding_list.append(vector)  
+               
+    return(embedding_list)
 
-def go_to_alignement_matrice(input1, input2):
-    print("coucou")
+#comment utiliser la fonction
+
+def dot_product(emb1_list, emb2_list):
+    calcul_dot_product = np.dot(emb1_list, np.array(emb2_list).T)
+    return(calcul_dot_product)
+   # np.savetxt(file_out, res, delimiter="\t")
+
+    
