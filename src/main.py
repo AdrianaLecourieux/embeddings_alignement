@@ -8,10 +8,13 @@ if __name__ == '__main__':
     
     seq1 = sys.argv[1] 
     seq2 = sys.argv[2]
+    fasta1 = sys.argv[3]
+    fasta2 = sys.argv[4]
     
     if not seq1.endswith(".t5emb") or not seq2.endswith(".t5emb"): 
         # Check the file extension
         print("ERROR : The two first arguments need to be .t5emb extension")
+
     
     else: 
         embedding1_list = fonction.read_embedding(seq1)

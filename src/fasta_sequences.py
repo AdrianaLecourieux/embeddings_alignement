@@ -2,21 +2,10 @@
 """Function to put a sequence from a fasta file to list. (sorry pr les fautes)"""
 
 def read_fasta(file):
-    """Get a fasta file as entry to return the corresponding seq in a list.
-
-    Parameters
-    ----------
-    file : str 
-        Name of fasta file.
-
-    Returns
-    -------
-    list
-        Sequence with each position separated.
-    """
     line_seq = ""
     with open(file, "r") as fasta:
         for line in fasta:
+            
             if not line.startswith(">"):
                 line_seq += line.strip()
                 print(line_seq)
@@ -25,8 +14,19 @@ def read_fasta(file):
 
 
 if __name__ == "__main__":
-    fasta = "P00509.fasta"
+    fasta = "5_3_EXONUCLEASE_1BGXT.fasta"
     seq = read_fasta(fasta)
+    print(len(seq))
     print(f'{seq}')
 
 # du coup les fichiers ont généralement ce genre de format voilaa
+
+
+ """   
+    def check_len_fasta_emb (emb, fasta):
+        if len(seq) != len(emb):
+            print("ERROR : FASTA and Embeddings aren't corrresponding
+                  "(not the same length)")
+        else:
+            return()
+ """

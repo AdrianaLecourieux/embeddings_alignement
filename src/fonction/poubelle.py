@@ -1,11 +1,27 @@
-def read_embedding(file):
+# Vérifier que seq fasta et embedding sont de la même longueur
 
-    sequence = []
-    with open(file, "r") as embedding:
-        for line in embedding:
-            vector = line.split()
-            vector = [float(x) for x in vector]
-            sequence.append(vector)
-    return sequence
+# Mettre en input la seq fasta et embedding 
 
-print(read_embedding("../5_3_exonuclease_1bgxt.t5emb"))
+
+#
+
+
+
+
+
+
+
+
+
+"""
+
+import sys
+
+try:
+    emb = int(sys.argv[1])
+except :
+    print("FASTA and Embeddings aren't corrresponding")
+    sys.exit("Usage : Length embeddings and fasta have too be the same")
+
+
+"""

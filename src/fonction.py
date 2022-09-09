@@ -39,7 +39,8 @@ def read_embedding(file):
 
 def dot_product(emb1_list, emb2_list):
     calcul_dot_product = np.dot(emb1_list, np.array(emb2_list).T)
+    print(calcul_dot_product)
     return(calcul_dot_product)
-   # np.savetxt(file_out, res, delimiter="\t")
+  
 
     
