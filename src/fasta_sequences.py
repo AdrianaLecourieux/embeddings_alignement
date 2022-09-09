@@ -1,32 +1,23 @@
 ##! /usr/bin/python3
-"""Function to put a sequence from a fasta file to list. (sorry pr les fautes)"""
 
-def read_fasta(file):
-    line_seq = ""
-    with open(file, "r") as fasta:
-        for line in fasta:
+
+def read_fasta(fasta_file):
+
+    line_sequence = ""
+    with open(fasta_file, "r") as fasta:
+        
+        for line_in_fasta in fasta:
             
-            if not line.startswith(">"):
-                line_seq += line.strip()
-                print(line_seq)
-        seq = list(line_seq)
-    return seq 
+            if not line_in_fasta.startswith(">"):
+                line_sequence += line_in_fasta.strip()
+                
+        list_fasta = list(line_in_fasta)
+        #print(f'{list_fasta}')
+        
+    return(list_fasta) 
 
 
-if __name__ == "__main__":
-    fasta = "5_3_EXONUCLEASE_1BGXT.fasta"
-    seq = read_fasta(fasta)
-    print(len(seq))
-    print(f'{seq}')
 
 # du coup les fichiers ont généralement ce genre de format voilaa
 
 
- """   
-    def check_len_fasta_emb (emb, fasta):
-        if len(seq) != len(emb):
-            print("ERROR : FASTA and Embeddings aren't corrresponding
-                  "(not the same length)")
-        else:
-            return()
- """
