@@ -10,14 +10,14 @@ You also need to install Miniconda an Mamba :
 To install mini conda : https://docs.conda.io/en/latest/miniconda.html#windows-installers
 Une fois que conda est installé, use the command :
 
-```
+```SHELL
 conda install mamba -n base -c conda-forge
 ```
 
 
 Load and activate the environnement :
 
-```
+```SHELL
 cd src/
 mamba env create -f embeddings.yml
 conda activate embeddings
