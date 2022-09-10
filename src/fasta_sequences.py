@@ -12,12 +12,11 @@ def read_fasta(fasta_file):
                 line_sequence += line_in_fasta.strip()
                 
         list_fasta = list(line_in_fasta)
-        #print(f'{list_fasta}')
         
     return(list_fasta) 
 
 
 
-# du coup les fichiers ont généralement ce genre de format voilaa
+
 
 
