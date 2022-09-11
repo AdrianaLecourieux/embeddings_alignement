@@ -23,13 +23,13 @@ if __name__ == '__main__':
     
     # Optionnal argument
     
-    parser.add_argument("-m","--method",  help='Choose a "global" (Needleman and Wunsch) or "local" (Smith and Waterman) alignment algorithm"')
+    parser.add_argument("-m","--method",  help='Choose a "global" (Needleman and Wunsch) or "local" (Smith and Waterman) alignment algorithm.  -m global default"')
     
     # Assign arguments to variables
     
     args = parser.parse_args()    
     seq1 = args.embedding1
-    seq2 = args.embedding1
+    seq2 = args.embedding2
     fasta1 = args.fasta1
     fasta2 = args.fasta2
     alignment_method = args.method
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         # Check the correspondance between embedding and fasta file 
         
         if len(embedding1_list) != len(fasta1_list) or len(embedding2_list) != len(fasta2_list):
-            raise Exception("ERROR : For one sequence, embedding and fasta sequence must have the same length. -m global default")
+            raise Exception("ERROR : For one sequence, embedding and fasta sequence must have the same length.")
 
         # Calcul of the dot product matrix
         
@@ -61,7 +61,7 @@ if __name__ == '__main__':
             
             # ------ Realise Needlman and Wunsh alignment 
             
-            transformed_matrix = NW.transformation(dot_pro_mat, fasta1_list, fasta2_list)
+            transformed_matrix = NW.transformation_NW(dot_pro_mat, fasta1_list, fasta2_list)
             
             seq_aligned_1, seq_aligned_2 = NW.needlman_wunsch(fasta1_list,fasta2_list, transformed_matrix)
             print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
