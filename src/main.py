@@ -15,13 +15,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     
     # Required arguments
+    
     parser.add_argument("-emb1","--embedding1",  help= "Embedding 1 in .t5emb extension")
     parser.add_argument("-emb2","--embedding2",  help= "Embedding 2 in .t5emb extension")
     parser.add_argument("-f1","--fasta1",  help= "Fasta 1 in .FASTA extension")
     parser.add_argument("-f2","--fasta2",  help= "Fasta 2 in .FASTA extension")
     
     # Optionnal argument
+    
     parser.add_argument("-m","--method",  help='Choose a "global" (Needleman and Wunsch) or "local" (Smith and Waterman) alignment algorithm"')
+    
+    # Assign arguments to variables
     
     args = parser.parse_args()    
     seq1 = args.embedding1
@@ -30,9 +34,9 @@ if __name__ == '__main__':
     fasta2 = args.fasta2
     alignment_method = args.method
 
-    
-    if not seq1.endswith(".t5emb") or not seq2.endswith(".t5emb"): 
-        # Check the file extension
+    # Check the file extension
+     
+    if not seq1.endswith(".t5emb") or not seq2.endswith(".t5emb"):   
         raise Exception("ERROR : The two first arguments must be .t5emb extension")
     
     
