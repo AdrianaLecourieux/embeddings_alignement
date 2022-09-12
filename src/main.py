@@ -5,10 +5,10 @@ import fonction  # import fonctions from the fonction file
 import fasta_sequences 
 import needlman_wunsch as NW
 import smith_waterman as SW
-import os
-import sys
+from pathlib import Path # to remove path
 import argparse  # to interact with arguments
 
+# python main.py -emb1 adk_2ak3a.t5emb -emb2 6PF2K_1bif.t5emb -f1 ADK_2AK3A.fasta -f2 6PF2K_1BIF.fasta -m global
 
 if __name__ == '__main__':
     
@@ -67,7 +67,7 @@ if __name__ == '__main__':
             # ------ Realise Needlman and Wunsh alignment 
             
             
-            #With affine gap penalty
+            # With affine gap penalty
             
             if gap_penalty == "yes":
                 
@@ -78,10 +78,10 @@ if __name__ == '__main__':
                 
                 # Save output in .txt file
                 
-                seq1_without_extenstion = os.path.splitext(seq1)[0]
-                seq2_without_extension = os.path.splitext(seq2)[0]
-                
-                with open(f'../results/{seq1_without_extenstion}__{seq2_without_extension}_global_gp_alignement.txt', "w") as file:
+                seq1_without_extension = Path(seq1).stem
+                seq2_without_extension = Path(seq2).stem
+           
+                with open(f'../results/{seq1_without_extension}__{seq2_without_extension}_global_gp_alignement.txt', "w") as file:
                     file.write(seq_aligned_1 + "\n" + seq_aligned_2)
                     
             # With fixed gap penalty
@@ -96,10 +96,10 @@ if __name__ == '__main__':
             
                 # Save output in .txt file
                 
-                seq1_without_extenstion = os.path.splitext(seq1)[0]
-                seq2_without_extension = os.path.splitext(seq2)[0]
+                seq1_without_extension = Path(seq1).stem       
+                seq2_without_extension = Path(seq2).stem
                 
-                with open(f'../results/{seq1_without_extenstion}__{seq2_without_extension}_global_alignement.txt', "w") as file:
+                with open(f'../results/{seq1_without_extension}__{seq2_without_extension}_global_alignement.txt', "w") as file:
                     file.write(seq_aligned_1 + "\n" + seq_aligned_2)
         
         
@@ -113,9 +113,10 @@ if __name__ == '__main__':
             
             # Save output in .txt file
             
-            seq1_without_extenstion_SW = os.path.splitext(seq1)[0]
-            seq2_without_extension_SW = os.path.splitext(seq2)[0]
-            with open(f'../results/{seq1_without_extenstion_SW}__{seq2_without_extension_SW}_local_alignement.txt', "w") as file:
+            seq1_without_extension_SW = Path(seq1).stem
+            seq2_without_extension_SW = Path(seq2).stem
+          
+            with open(f'../results/{seq1_without_extension_SW}__{seq2_without_extension_SW}_local_alignement.txt', "w") as file:
                 file.write(seq_aligned_1_SW + "\n" + seq_aligned_2_SW)
 
             # ------ Realise Semi-global alignment 

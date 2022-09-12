@@ -41,7 +41,6 @@ def transformation_SW(dot_matrix, seq1, seq2):
    
 
 def smith_waterman(seq1,seq2, transformed_matrix):
-    print(transformed_matrix.shape)
     # Find optimal way
     
     aligned_sequence1 = ""
@@ -49,8 +48,10 @@ def smith_waterman(seq1,seq2, transformed_matrix):
     
     # find the maximal score and the index in the transformed matrix 
     # ATTENTION : PLS CHEMIN OPTIMAUX (dire de prendre en bas à gauche)
-    index_max = np.where(transformed_matrix == np.amax(transformed_matrix))
+    #index_max = np.where(transformed_matrix == np.amax(transformed_matrix))
+    index_max = np.unravel_index(np.argmax(transformed_matrix, axis=None), transformed_matrix.shape) # Take the first max met
     print(index_max)
+ 
     i = int(index_max[0])
     j = int(index_max[1])
     
