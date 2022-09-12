@@ -97,7 +97,7 @@ cd src/
 python main.py -emb1 embedding1.t5emb -emb2 embedding2.t5emb -f1 fasta1.fasta -f2 fasta2.fasta -m semi_global
 ```
 
-## :three: Collect output
+## :four: Collect output
 The outputs are in the following path :
 
 ```SHELL
