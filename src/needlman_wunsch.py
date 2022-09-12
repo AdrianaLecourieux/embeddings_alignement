@@ -1,6 +1,6 @@
 # --- Needlman and Wunsch alignment script
 
-from pickle import FALSE
+from pickle import FALSE # ??
 import numpy as np
 
 # --- With gap penalty fixed to 0

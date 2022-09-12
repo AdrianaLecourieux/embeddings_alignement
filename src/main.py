@@ -14,18 +14,22 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     
-    # Required arguments
+    # --- Required arguments
     
     parser.add_argument("-emb1","--embedding1",  help= "Embedding 1 in .t5emb extension")
     parser.add_argument("-emb2","--embedding2",  help= "Embedding 2 in .t5emb extension")
     parser.add_argument("-f1","--fasta1",  help= "Fasta 1 in .FASTA extension")
     parser.add_argument("-f2","--fasta2",  help= "Fasta 2 in .FASTA extension")
     
-    # Optionnal argument
+    # --- Optionnal argument
     
+        # Method
     parser.add_argument("-m","--method",  help='Choose a "global" (Needleman and Wunsch) or "local" (Smith and Waterman) alignment algorithm.  -m global default"')
     
-    # Assign arguments to variables
+        # Gap penalty
+    parser.add_argument("-g","--gap_penalty",  help='Use this option to add affine gap penalty (Enter "yes" to used -1 for gap opening and 0 for gap extension). Else, gap penalty is fixed to 0')
+    
+    # --- Assign arguments to variables
     
     args = parser.parse_args()    
     seq1 = args.embedding1
@@ -33,6 +37,7 @@ if __name__ == '__main__':
     fasta1 = args.fasta1
     fasta2 = args.fasta2
     alignment_method = args.method
+    gap_penalty = args.gap_penalty
 
     # Check the file extension
      
@@ -61,18 +66,41 @@ if __name__ == '__main__':
             
             # ------ Realise Needlman and Wunsh alignment 
             
-            transformed_matrix = NW.transformation_NW(dot_pro_mat, fasta1_list, fasta2_list)
             
-            seq_aligned_1, seq_aligned_2 = NW.needlman_wunsch(fasta1_list,fasta2_list, transformed_matrix)
-            print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
-
-            # Save output in .txt file
+            #With affine gap penalty
             
-            seq1_without_extenstion = os.path.splitext(seq1)[0]
-            seq2_without_extension = os.path.splitext(seq2)[0]
+            if gap_penalty == "yes":
+                
+                transformed_matrix_gp = NW.transformation_NW_affine_gap_penalty(dot_pro_mat, fasta1_list, fasta2_list)
+                
+                seq_aligned_1, seq_aligned_2 = NW.needlman_wunsch(fasta1_list,fasta2_list, transformed_matrix_gp)
+                print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
+                
+                # Save output in .txt file
+                
+                seq1_without_extenstion = os.path.splitext(seq1)[0]
+                seq2_without_extension = os.path.splitext(seq2)[0]
+                
+                with open(f'../results/{seq1_without_extenstion}__{seq2_without_extension}_global_gp_alignement.txt', "w") as file:
+                    file.write(seq_aligned_1 + "\n" + seq_aligned_2)
+                    
+            # With fixed gap penalty
             
-            with open(f'../results/{seq1_without_extenstion}__{seq2_without_extension}_global_alignement.txt', "w") as file:
-                file.write(seq_aligned_1 + "\n" + seq_aligned_2)
+            else: 
+                
+                transformed_matrix = NW.transformation_NW(dot_pro_mat, fasta1_list, fasta2_list)
+                
+                seq_aligned_1, seq_aligned_2 = NW.needlman_wunsch(fasta1_list,fasta2_list, transformed_matrix)
+                print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
+                
+            
+                # Save output in .txt file
+                
+                seq1_without_extenstion = os.path.splitext(seq1)[0]
+                seq2_without_extension = os.path.splitext(seq2)[0]
+                
+                with open(f'../results/{seq1_without_extenstion}__{seq2_without_extension}_global_alignement.txt', "w") as file:
+                    file.write(seq_aligned_1 + "\n" + seq_aligned_2)
         
         
         elif alignment_method == "local":
@@ -89,4 +117,5 @@ if __name__ == '__main__':
             seq2_without_extension_SW = os.path.splitext(seq2)[0]
             with open(f'../results/{seq1_without_extenstion_SW}__{seq2_without_extension_SW}_local_alignement.txt', "w") as file:
                 file.write(seq_aligned_1_SW + "\n" + seq_aligned_2_SW)
-        
+
+            # ------ Realise Semi-global alignment 
