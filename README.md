@@ -104,6 +104,6 @@ The outputs are in the following path :
 cd ../results
 ```
 
-## :large_blue_diamond: Example
+## :five: Example
 
 ***
