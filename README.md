@@ -2,7 +2,7 @@
 
 Le but de ce projet est de crée un programme d'alignement d'embeddings par programmation dynamique
 
-## To beginning
+## Prerequisite
 
 Pour pouvoir faire tourner le programme, il faut dans un premier temps avec python. Pour télécharger python : XXX. La version utilisée pour réaliser ce projet est la XXXX.
 
