@@ -67,7 +67,7 @@ cd src/
 ```PYTHON
 python main.py -emb1 embedding1.t5emb -emb2 embedding2.t5emb -f1 fasta1.fasta -f2 fasta2.fasta -m global
 ```
-* If you want to run a global alignment with an affine gap penalty (with the penlaties: -1 for a gap opening and 0 for a gap extension):
+* If you want to run a global alignment with an affine gap penalty (with the penalties: -1 for a gap opening and 0 for a gap extension):
 
 ```SHELL
 cd src/
@@ -111,7 +111,7 @@ cd ../results
 ```PYTHON
 python main.py -emb1 ../data/embeddings/5_3_exonuclease_1bgxt.t5emb -emb2 ../data/embeddings/6PF2K_1bif.t5emb -f1 ../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta -f2 ../data/fasta_sequences/6PF2K_1BIF.fasta -m global
 ```
-* affine gap penalty (with the penlaties: -1 for a gap opening and 0 for a gap extension):
+* affine gap penalty (with the penalties: -1 for a gap opening and 0 for a gap extension):
 ```PYTHON
 python main.py -emb1 ../data/embeddings/5_3_exonuclease_1bgxt.t5emb -emb2 ../data/embeddings/6PF2K_1bif.t5emb -f1 ../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta -f2 ../data/fasta_sequences/6PF2K_1BIF.fasta -m global -g yes
 ```
