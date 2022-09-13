@@ -1,12 +1,19 @@
 # --- Main File --- #
 
+
+# --- Import modules
 from ctypes import alignment
-import fonction  # import fonctions from the fonction file
+from pathlib import Path # to remove path
+import argparse  # to interact with arguments
+
+# --- Import functions from different files
+import pre_process_emb 
+import scorefonction
 import fasta_sequences 
 import needlman_wunsch as NW
 import smith_waterman as SW
-from pathlib import Path # to remove path
-import argparse  # to interact with arguments
+
+
 
 # python main.py -emb1 adk_2ak3a.t5emb -emb2 6PF2K_1bif.t5emb -f1 ADK_2AK3A.fasta -f2 6PF2K_1BIF.fasta -m global
 
@@ -46,8 +53,8 @@ if __name__ == '__main__':
     
     
     else: 
-        embedding1_list = fonction.read_embedding(seq1)
-        embedding2_list = fonction.read_embedding(seq2) 
+        embedding1_list = pre_process_emb.read_embedding(seq1)
+        embedding2_list = pre_process_emb.read_embedding(seq2) 
         fasta1_list = fasta_sequences.read_fasta(fasta1)
         fasta2_list = fasta_sequences.read_fasta(fasta2)
         
@@ -59,7 +66,7 @@ if __name__ == '__main__':
 
         # Calcul of the dot product matrix
         
-        dot_pro_mat = fonction.dot_product(embedding1_list, embedding2_list)
+        dot_pro_mat = scorefonction.dot_product(embedding1_list, embedding2_list)
         
         
         if alignment_method == "global" or not alignment_method :

@@ -1,12 +1,32 @@
-# --- Needlman and Wunsch alignment script
+# --- Needleman and Wunsch alignment script
 
-from pickle import FALSE # ??
-import numpy as np
+import numpy as np # import the numpy module and rename it
 
 # --- With gap penalty fixed to 0
 
 def transformation_NW(dot_matrix, seq1, seq2):
-    
+    """Creation of the transformed matrix from the dot product matrix and 
+    fasta sequences.
+
+    The transformed matrix is created by following the Needleman and Wunsch algorithm 
+    with the dot product matrix as the score matrix and a fixed gap penalty set to 0
+
+    Parameters
+    ----------
+    dot_matrix : array
+        An array where each value corresponds to the dot product obtained 
+        from the embedding vectors of one position of protein 1 and another
+        position of protein 2.
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+        
+    Returns
+    -------
+    transformed_matrix : matrix
+        New matrix completed from the Needleman and Wunsch algorithm 
+    """
     # Creation of the transformed matrix
     
     col_seq1 = len(seq1) + 1
@@ -24,7 +44,28 @@ def transformation_NW(dot_matrix, seq1, seq2):
     return(np.matrix(transformed_matrix)) 
 
 def needlman_wunsch(seq1,seq2, transformed_matrix):
+    """Needleman and Wunsch global alignment.
 
+    Finds the optimal path starting from the bottom right of the transformed 
+    matrix and going up to (0,0). Creating chain of string with gap when insertion
+    or deletion occurs (top / left).
+
+    Parameters
+    ----------
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+    transformed_matrix : matrix
+        Transformed matrix completed from the Needleman and Wunsch algorithm 
+          
+    Returns
+    -------
+    aligned_sequence1: string
+        Chain of string composed of amino acid and gap
+    aligned_sequence2: string
+        Chain of string composed of amino acid and gap
+    """
     # Find optimal path
     
     aligned_sequence1 = ""
@@ -89,7 +130,29 @@ def needlman_wunsch(seq1,seq2, transformed_matrix):
 # --- With affine gap penalty set to -1 for gap opening and 0 for gap extension
 
 def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
-    
+    """Creation of the transformed matrix from the dot product matrix and 
+    fasta sequences.
+
+    The transformed matrix is created by following the Needleman and Wunsch algorithm 
+    with the dot product matrix as the score matrix and a affine gap penalty set to:
+    -1 for gap opening and 0 for gap extension
+
+    Parameters
+    ----------
+    dot_matrix : array
+        An array where each value corresponds to the dot product obtained 
+        from the embedding vectors of one position of protein 1 and another
+        position of protein 2.
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+    seq2: list
+        list with every amino acids of fasta_file2 separated by quotes
+        
+    Returns
+    -------
+    transformed_matrix : matrix
+        New matrix completed from the Needleman and Wunsch algorithm 
+    """ 
     # Creation of the transformed matrix of zeros
     
     col_seq1 = len(seq1) + 1
