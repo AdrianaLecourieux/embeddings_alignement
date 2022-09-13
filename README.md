@@ -10,7 +10,7 @@ To download python: https://www.python.org/downloads/. The version used for this
 Clone the repository:
 
 ```SHELL
-git clone XX
+git clone git@github.com:AdrianaLecourieux/embeddings_alignment.git
 ```
 
 Move to the new directory:
@@ -57,6 +57,30 @@ cd data/fasta_sequences
 -----------------------
 
 ## :two: Running embeddings alignment
+
+If you need help about inputs, you can use the --help command:
+
+```SHELL
+cd src/
+python .\main.py --help
+```
+```
+  -h, --help            show this help message and exit
+  -emb1 EMBEDDING1, --embedding1 EMBEDDING1
+                        Embedding 1 in .t5emb extension
+  -emb2 EMBEDDING2, --embedding2 EMBEDDING2
+                        Embedding 2 in .t5emb extension
+  -f1 FASTA1, --fasta1 FASTA1
+                        Fasta 1 in .FASTA extension
+  -f2 FASTA2, --fasta2 FASTA2
+                        Fasta 2 in .FASTA extension
+  -m METHOD, --method METHOD
+                        Choose a "global" (Needleman and Wunsch) or "local" (Smith and Waterman) alignment algorithm.
+                        -m global default"
+  -g GAP_PENALTY, --gap_penalty GAP_PENALTY
+                        Use this option to add affine gap penalty (Enter "yes" to used -1 for gap opening and 0 for
+                        gap extension). Else, gap penalty is fixed to 0
+```
 
 ### :point_right: Global Alignment (Needleman and Wunsch)
 * If you want to run a global alignment with a gap penalty fixed to 0:
