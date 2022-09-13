@@ -29,21 +29,21 @@ def transformation_NW(dot_matrix, seq1, seq2):
     """
     # Creation of the transformed matrix
     
-    col_seq1 = len(seq1) + 1
-    row_seq2 = len(seq2) + 1
-    transformed_matrix= np.zeros((col_seq1, row_seq2),dtype = int)
-    for i in range(1,col_seq1):
+    col_seq = len(seq2) + 1
+    row_seq = len(seq1) + 1
+    transformed_matrix= np.zeros((col_seq, row_seq),dtype = int)
+    for i in range(1,col_seq):
         
-            for j in range(1,row_seq2):
+            for j in range(1,row_seq):
                 
-                top = transformed_matrix[i][j-1] 
+                left = transformed_matrix[i][j-1] 
                 diagonal = transformed_matrix[i-1][j-1] + dot_matrix[i-1][j-1] 
-                left = transformed_matrix[i-1][j] 
+                top = transformed_matrix[i-1][j] 
                 transformed_matrix[i,j] = max(diagonal, top, left)
                 
     return(np.matrix(transformed_matrix)) 
 
-def needlman_wunsch(seq1,seq2, transformed_matrix):
+def needleman_wunsch(seq1,seq2, transformed_matrix):
     """Needleman and Wunsch global alignment.
 
     Finds the optimal path starting from the bottom right of the transformed 
@@ -70,51 +70,51 @@ def needlman_wunsch(seq1,seq2, transformed_matrix):
     
     aligned_sequence1 = ""
     aligned_sequence2 = ""
-    i = len(seq1)
-    j = len(seq2)
+    i = len(seq2)
+    j = len(seq1)
 
     #From the right bottom to the left top
     
     while i > 0 and j > 0:
         
         score_diagonal = transformed_matrix[i-1,j-1]
-        score_top = transformed_matrix[i,j-1]
-        score_left = transformed_matrix[i-1,j]
+        score_left = transformed_matrix[i,j-1]
+        score_top = transformed_matrix[i-1,j]
         max_value = max(score_diagonal, score_left, score_top)        
 
         # Calcule the score value
             
         if max_value == score_diagonal :
 
-            aligned_sequence2 += seq2[j-1]
-            aligned_sequence1 += seq1[i-1]
+            aligned_sequence2 += seq2[i-1]
+            aligned_sequence1 += seq1[j-1]
             i -= 1
             j -= 1
         
-        elif max_value == score_top :
+        elif max_value == score_top:
 
-            aligned_sequence2 += seq2[j-1]
+            aligned_sequence2 += seq2[i-1]
             aligned_sequence1 += '-'
-            j -= 1
+            i -= 1
                        
         elif max_value == score_left :
             
             aligned_sequence2 += '-'
-            aligned_sequence1 += seq1[i-1]
-            i -= 1
+            aligned_sequence1 += seq1[j-1]
+            j -= 1
             
     # finish when meeting 0 on j or i
     
     while j > 0:
         
-        aligned_sequence2 += seq2[j-1]
-        aligned_sequence1 += '-'
+        aligned_sequence1 += seq1[j-1]
+        aligned_sequence2 += '-'
         j -= 1
         
     while i > 0:
         
-        aligned_sequence2 += '-'
-        aligned_sequence1 += seq1[i-1]
+        aligned_sequence1 += '-'
+        aligned_sequence2 += seq2[i-1]
         i -= 1
     
     aligned_sequence1 = aligned_sequence1[::-1]
@@ -155,21 +155,21 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
     """ 
     # Creation of the transformed matrix of zeros
     
-    col_seq1 = len(seq1) + 1
-    row_seq2 = len(seq2) + 1
+    col_seq = len(seq2) + 1
+    row_seq = len(seq1) + 1
     
-    transformed_matrix= np.zeros((col_seq1, row_seq2),dtype = int)
+    transformed_matrix= np.zeros((col_seq, row_seq),dtype = int)
    
    
     # Create a penalty matrix of 1 (no penalty) and gap penalty
     
-    penalty_matrix = np.ones((col_seq1, row_seq2),dtype = int)
+    penalty_matrix = np.ones((col_seq, row_seq),dtype = int)
     open_gap = -1
     extension_gap = 0
     
-    for i in range(0, col_seq1):
+    for i in range(0, col_seq):
         
-            for j in range(0, row_seq2):
+            for j in range(0, row_seq):
                 
                 # First cell
                 
@@ -236,7 +236,8 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
         # -------
         # ------- Check if it's gap opening or gap extension          
                     #si max c'est left alors prend left et si c'est 1 dans la penality matrix alors c'est ouverture de gap
-                    if max(top, left, diagonal) == left:
+                    max_val = max(top, left, diagonal)
+                    if max_val == left:
                         transformed_matrix[i,j] = left                        
                         if penalty_matrix[i, j-1] == 1:
                             penalty_matrix[i,j] = open_gap
@@ -244,7 +245,7 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
                         else: # sinon c'est extension de gap
                             penalty_matrix[i,j] = extension_gap
                     
-                    elif max(top, left, diagonal) == top: # si le max c'est top et que 1 dans penlty alors ouverture
+                    elif max_val == top: # si le max c'est top et que 1 dans penlty alors ouverture
                         transformed_matrix[i,j] = top
                         if penalty_matrix[i-1, j] == 1:
                             penalty_matrix[i,j] = open_gap

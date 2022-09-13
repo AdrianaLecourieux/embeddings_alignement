@@ -25,7 +25,7 @@ def dot_product(emb1_list, emb2_list):
         from the embedding vectors of one position of protein 1 and another
         position of protein 2.
     """
-    calcul_dot_product = np.dot(emb1_list, np.array(emb2_list).T) 
+    calcul_dot_product = np.dot(emb2_list, np.array(emb1_list).T) 
 
     return(calcul_dot_product)
   
