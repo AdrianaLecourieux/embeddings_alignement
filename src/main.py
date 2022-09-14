@@ -2,7 +2,7 @@
 
 
 # --- Import modules
-from pathlib import Path # to remove path
+
 import argparse  # to interact with arguments
 
 # --- Import functions from fonctions folder
@@ -12,6 +12,7 @@ from fonctions import fasta_sequences
 from fonctions import needleman_wunsch as NW
 from fonctions import smith_waterman as SW
 from fonctions import semi_global_alignment as SG
+from fonctions import save_output
 
 
 # python main.py -emb1 adk_2ak3a.t5emb -emb2 6PF2K_1bif.t5emb -f1 ADK_2AK3A.fasta -f2 6PF2K_1BIF.fasta -m global
@@ -79,16 +80,9 @@ if __name__ == '__main__':
                 
                 transformed_matrix_gp = NW.transformation_NW_affine_gap_penalty(dot_pro_mat, fasta1_list, fasta2_list)
                 
-                seq_aligned_1, seq_aligned_2 = NW.needleman_wunsch(fasta1_list,fasta2_list, transformed_matrix_gp)
-                print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
+                seq_aligned_list = NW.needleman_wunsch(fasta1_list,fasta2_list, transformed_matrix_gp)
                 
-                # Save output in .txt file
-                
-                seq1_without_extension = Path(seq1).stem
-                seq2_without_extension = Path(seq2).stem
-           
-                with open(f'../results/{seq1_without_extension}__{seq2_without_extension}_global_gp_alignement.txt', "w") as file:
-                    file.write(seq_aligned_1 + "\n" + seq_aligned_2)
+                output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
                     
             # With fixed gap penalty
             
@@ -96,17 +90,11 @@ if __name__ == '__main__':
                 
                 transformed_matrix = NW.transformation_NW(dot_pro_mat, fasta1_list, fasta2_list)
                 
-                seq_aligned_1, seq_aligned_2 = NW.needleman_wunsch(fasta1_list,fasta2_list, transformed_matrix)
-                print("\n" + seq_aligned_1 + "\n" + seq_aligned_2 + "\n" + "Alignment completed successfully !" )
-                
-            
+                seq_aligned_list = NW.needleman_wunsch(fasta1_list,fasta2_list, transformed_matrix)
+                       
                 # Save output in .txt file
                 
-                seq1_without_extension = Path(seq1).stem       
-                seq2_without_extension = Path(seq2).stem
-                
-                with open(f'../results/{seq1_without_extension}__{seq2_without_extension}_global_alignement.txt', "w") as file:
-                    file.write(seq_aligned_1 + "\n" + seq_aligned_2)
+                output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
         
         
         elif alignment_method == "local":
@@ -115,30 +103,19 @@ if __name__ == '__main__':
             
             transformed_matrix_SW = SW.transformation_SW(dot_pro_mat, fasta1_list, fasta2_list)
             seq_aligned_list = SW.smith_waterman(fasta1_list,fasta2_list, transformed_matrix_SW)
-            print("Alignment completed successfully !" )
+            
             
             # Save output in .txt file
-            
-            seq1_without_extension_SW = Path(seq1).stem
-            seq2_without_extension_SW = Path(seq2).stem
           
-            with open(f'../results/{seq1_without_extension_SW}__{seq2_without_extension_SW}_local_alignement.txt', "w") as file:
-               
-                for seq_aligned_1_SW, seq_aligned_2_SW in seq_aligned_list:
-                    
-                    file.write(seq_aligned_1_SW + "\n" + seq_aligned_2_SW + "\n\n" )
+            output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
 
             # ------ Realise Semi-global alignment 
         
         elif alignment_method == "semi_global":
+            
             transformed_matrix_SW = SG.transformation_semi_global(dot_pro_mat, fasta1_list, fasta2_list)
-            seq_aligned_1_SW, seq_aligned_2_SW = SG.semi_global(fasta1_list,fasta2_list, transformed_matrix_SW)
-            print("\n" + seq_aligned_1_SW + "\n" + seq_aligned_2_SW + "\n" + "Alignment completed successfully !" )
+            seq_aligned_list = SG.semi_global(fasta1_list,fasta2_list, transformed_matrix_SW)
             
             # Save output in .txt file
-            
-            seq1_without_extension_SW = Path(seq1).stem
-            seq2_without_extension_SW = Path(seq2).stem
-          
-            with open(f'../results/{seq1_without_extension_SW}__{seq2_without_extension_SW}_semi_global_alignement.txt', "w") as file:
-                file.write(seq_aligned_1_SW + "\n" + seq_aligned_2_SW)
+         
+            output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
