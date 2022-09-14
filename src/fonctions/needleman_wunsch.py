@@ -219,11 +219,11 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
                 # Rest of the matrix
                 
                 else:
-        # ------- Pour avoir le score autour de i,j
-                # si pas de penalité dans case gauche alors juste le score de gauche
+        # ------- Score arround i,j  
+                 # if there isn't penalty in left cell : take left score
                     if penalty_matrix[i, j-1] == 1 :
                          left= transformed_matrix[i][j-1] 
-                    else: # else score + penalty
+                    else: #  score + penalty
                         left = transformed_matrix[i][j-1] +  penalty_matrix[i, j-1]
                         
                     # if there isn't penalty in top : take top score
