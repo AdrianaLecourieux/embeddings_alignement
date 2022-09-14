@@ -24,7 +24,7 @@ def transformation_SW(dot_matrix, seq1, seq2):
     Returns
     -------
     transformed_matrix : matrix
-        New matrix completed from the Needleman and Wunsch algorithm 
+        New matrix completed from the Smith and Waterman algorithm 
     """
     # Creation of the transformed matrix
     # print(dot_matrix.shape)
@@ -165,7 +165,8 @@ def transformation_SW_gp(dot_matrix, seq1, seq2):
     fasta sequences.
 
     The transformed matrix is created by following the Smith and Waterman algorithm 
-    with the dot product matrix as the score matrix and a fixed gap penalty set to 0
+    with the dot product matrix as the score matrix and a affine gap penalty set to:
+    -1 for gap opening and 0 for gap extension
 
     Parameters
     ----------
@@ -181,7 +182,7 @@ def transformation_SW_gp(dot_matrix, seq1, seq2):
     Returns
     -------
     transformed_matrix : matrix
-        New matrix completed from the Needleman and Wunsch algorithm 
+        New matrix completed from the Smith and Waterman algorithm 
     """
     # Creation of the transformed matrix
 

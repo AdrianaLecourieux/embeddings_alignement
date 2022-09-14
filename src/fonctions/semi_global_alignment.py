@@ -156,7 +156,8 @@ def transformation_semi_global_gp(dot_matrix, seq1, seq2):
 
     The transformed matrix is created by following the semi-global algorithm (based
     on NW algorithm) 
-    with the dot product matrix as the score matrix and a fixed gap penalty set to 0
+    with the dot product matrix as the score matrix and a affine gap penalty set to:
+    -1 for gap opening and 0 for gap extension
 
     Parameters
     ----------
