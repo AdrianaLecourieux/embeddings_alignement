@@ -23,10 +23,10 @@ if __name__ == '__main__':
     
     # --- Required arguments
     
-    parser.add_argument("-emb1","--embedding1",  help= "Embedding 1 in .t5emb extension")
-    parser.add_argument("-emb2","--embedding2",  help= "Embedding 2 in .t5emb extension")
-    parser.add_argument("-f1","--fasta1",  help= "Fasta 1 in .FASTA extension")
-    parser.add_argument("-f2","--fasta2",  help= "Fasta 2 in .FASTA extension")
+    parser.add_argument("-emb1","--embedding1",  help= "Enter Embedding 1 in .t5emb extension")
+    parser.add_argument("-emb2","--embedding2",  help= "Enter Embedding 2 in .t5emb extension")
+    parser.add_argument("-f1","--fasta1",  help= "Enter Fasta 1 in .FASTA extension")
+    parser.add_argument("-f2","--fasta2",  help= "Enter Fasta 2 in .FASTA extension")
     
     # --- Optionnal argument
     
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     parser.add_argument("-m","--method",  help='Choose a "global" (Needleman and Wunsch), "local" (Smith and Waterman) or "semi_global" alignment algorithm.  -m global default"')
     
         # Gap penalty
-    parser.add_argument("-g","--gap_penalty",  help='Use this option to add affine gap penalty (Enter "yes" to used -1 for gap opening and 0 for gap extension). Else, gap penalty is fixed to 0')
+    parser.add_argument("-g","--gap_penalty",  help='Use this option to add affine gap penalty (Enter "affine" to used -1 for gap opening and 0 for gap extension). Else, gap penalty is fixed to 0')
     
     # --- Assign arguments to variables
     
@@ -67,22 +67,22 @@ if __name__ == '__main__':
         # Calcul of the dot product matrix
         
         dot_pro_mat = score_fonction.dot_product(embedding1_list, embedding2_list)
-        
+            
+            # ------ Realise needleman and Wunsh alignment 
         
         if alignment_method == "global" or not alignment_method :
             
-            # ------ Realise needleman and Wunsh alignment 
-            
-            
             # With affine gap penalty
             
-            if gap_penalty == "yes":
+            if gap_penalty == "affine":
                 
                 transformed_matrix_gp = NW.transformation_NW_affine_gap_penalty(dot_pro_mat, fasta1_list, fasta2_list)
                 
                 seq_aligned_list = NW.needleman_wunsch(fasta1_list,fasta2_list, transformed_matrix_gp)
                 
-                output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
+                # Save output in .txt file
+                
+                output = save_output.save_in_txt_gp(seq1, seq2, alignment_method, seq_aligned_list)
                     
             # With fixed gap penalty
             
@@ -97,25 +97,45 @@ if __name__ == '__main__':
                 output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
         
         
+             # ------ Realise Smith and Waterman alignment 
+            
         elif alignment_method == "local":
             
-            # ------ Realise Smith and Waterman alignment 
+            if gap_penalty == "affine":
+                
+                transformed_matrix_gp = SW.transformation_SW_gp(dot_pro_mat, fasta1_list, fasta2_list)
+                seq_aligned_list = SW.smith_waterman(fasta1_list,fasta2_list, transformed_matrix_gp)
+                
+                # Save output in .txt file
+                
+                output = save_output.save_in_txt_gp(seq1, seq2, alignment_method, seq_aligned_list)
             
-            transformed_matrix_SW = SW.transformation_SW(dot_pro_mat, fasta1_list, fasta2_list)
-            seq_aligned_list = SW.smith_waterman(fasta1_list,fasta2_list, transformed_matrix_SW)
+            else:
+                
+                transformed_matrix_SW = SW.transformation_SW(dot_pro_mat, fasta1_list, fasta2_list)
+                seq_aligned_list = SW.smith_waterman(fasta1_list,fasta2_list, transformed_matrix_SW)
+                
+                # Save output in .txt file
+                
+                output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
             
-            
-            # Save output in .txt file
-          
-            output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
+
 
             # ------ Realise Semi-global alignment 
         
         elif alignment_method == "semi_global":
             
-            transformed_matrix_SW = SG.transformation_semi_global(dot_pro_mat, fasta1_list, fasta2_list)
-            seq_aligned_list = SG.semi_global(fasta1_list,fasta2_list, transformed_matrix_SW)
-            
-            # Save output in .txt file
-         
-            output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)
+            if gap_penalty == "affine":
+                transformed_matrix_SW = SG.transformation_semi_global_gp(dot_pro_mat, fasta1_list, fasta2_list)
+                seq_aligned_list = SG.semi_global(fasta1_list,fasta2_list, transformed_matrix_SW)   
+                
+                # Save output in .txt file
+                  
+                output = save_output.save_in_txt_gp(seq1, seq2, alignment_method, seq_aligned_list)
+            else:
+                transformed_matrix_SW = SG.transformation_semi_global(dot_pro_mat, fasta1_list, fasta2_list)
+                seq_aligned_list = SG.semi_global(fasta1_list,fasta2_list, transformed_matrix_SW)     
+                
+                # Save output in .txt file
+                
+                output = save_output.save_in_txt(seq1, seq2, alignment_method, seq_aligned_list)

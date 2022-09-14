@@ -17,7 +17,7 @@ def transformation_NW(dot_matrix, seq1, seq2):
         An array where each value corresponds to the dot product obtained 
         from the embedding vectors of one position of protein 1 and another
         position of protein 2.
-    seq2: list
+    seq1: list
         list with every amino acids of fasta_file2 separated by quotes
     seq2: list
         list with every amino acids of fasta_file2 separated by quotes
@@ -52,7 +52,7 @@ def needleman_wunsch(seq1,seq2, transformed_matrix):
 
     Parameters
     ----------
-    seq2: list
+    seq1: list
         list with every amino acids of fasta_file2 separated by quotes
     seq2: list
         list with every amino acids of fasta_file2 separated by quotes
@@ -74,6 +74,7 @@ def needleman_wunsch(seq1,seq2, transformed_matrix):
     j = len(seq1)
 
     #From the right bottom to the left top
+    align_list = []
     
     while i > 0 and j > 0:
         
@@ -120,7 +121,9 @@ def needleman_wunsch(seq1,seq2, transformed_matrix):
     aligned_sequence1 = aligned_sequence1[::-1]
     aligned_sequence2 = aligned_sequence2[::-1]
     
-    return(aligned_sequence1, aligned_sequence2)
+    align_list.append([aligned_sequence1, aligned_sequence2])
+    
+    return(align_list)
 
 
 
@@ -143,7 +146,7 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
         An array where each value corresponds to the dot product obtained 
         from the embedding vectors of one position of protein 1 and another
         position of protein 2.
-    seq2: list
+    seq1: list
         list with every amino acids of fasta_file2 separated by quotes
     seq2: list
         list with every amino acids of fasta_file2 separated by quotes
@@ -173,7 +176,6 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
                 
                 # First cell
                 
-                #print(i,j)
                 if i == 0 and j == 0:
                     transformed_matrix[i][j] = 0
                 
