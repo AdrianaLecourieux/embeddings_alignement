@@ -90,7 +90,6 @@ def smith_waterman(seq1,seq2, transformed_matrix):
     # find the maximal score and the index in the transformed matrix 
     
     index_max = np.where(transformed_matrix == np.amax(transformed_matrix))
-    #index_max = np.unravel_index(np.argmax(transformed_matrix, axis=None), transformed_matrix.shape) # Take the first max met
    
     idx_row = index_max[0] # tuple of max value indexes in row
     idx_col = index_max[1] # tuple of max value indexes in col   
@@ -203,6 +202,7 @@ def transformation_SW_gp(dot_matrix, seq1, seq2):
                 
                 if i == 0 and j == 0:
                     transformed_matrix[i][j] = 0
+                
                 # First row
                 
                 elif i == 0:
@@ -246,54 +246,64 @@ def transformation_SW_gp(dot_matrix, seq1, seq2):
                     
                     else:
                         penalty_matrix[i,j] = extension_gap
+                        
+            
                 # Rest of the matrix
                             
                 else:
-                        
+                    
+                 # ------- Score arround i,j    
+                 
+                    # if there isn't penalty in left cell : take left score
                     if penalty_matrix[i, j-1] == 1 :
                             
                         left= transformed_matrix[i][j-1] 
                         
-                    else: 
+                    else: # else score + penalty
                         left = transformed_matrix[i][j-1] +  penalty_matrix[i, j-1]    
                     
                     if left < 0:
                         left = 0      
-                    # si pas de penalité au top ..... score du haut
+                    # if there isn't penalty in top : take top score
                     if penalty_matrix [i-1][ j] == 1 :
                         
                         top = transformed_matrix[i-1][j] 
-                    else: # sinon ... + penalité
+                        
+                    else: 
+                        # penalty
                         top =transformed_matrix[i-1][j] + penalty_matrix [i-1][ j]
                     
                     if top < 0:
                         top = 0  
                             
-                       # pas de penalité 
+                       # no penalty
                     diagonal = transformed_matrix[i-1][j-1] + dot_matrix[i-1][j-1]
                     
                     if diagonal < 0:
                         diagonal = 0  
                     
-                           # ------- Check if it's gap opening or gap extension          
-                    #si max c'est left alors prend left et si c'est 1 dans la penality matrix alors c'est ouverture de gap
+            # ------- Check if it's gap opening or gap extension          
+                   
+                    # if left is max and if it's 1 in penalty matrix : gap opening 
                     max_val = max(top, left, diagonal)
                     
                     if max_val == left:
-                        transformed_matrix[i,j] = left                        
+                        transformed_matrix[i,j] = left    
+                                            
                         if penalty_matrix[i, j-1] == 1:
                             penalty_matrix[i,j] = open_gap
                         
-                        else: # sinon c'est extension de gap
+                        else: # else it's a gap extension
                             penalty_matrix[i,j] = extension_gap
                         
                     
-                    elif max_val == top: # si le max c'est top et que 1 dans penlty alors ouverture
+                    elif max_val == top: # if top is max and if it's 1 in penalty matrix : gap opening 
                         transformed_matrix[i,j] = top
+                        
                         if penalty_matrix[i-1, j] == 1:
                             penalty_matrix[i,j] = open_gap
                         
-                        else: # sinon extension
+                        else:  # else it's a gap extension
                             penalty_matrix[i,j] = extension_gap
                     
                     else:

@@ -223,36 +223,39 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
                 # si pas de penalité dans case gauche alors juste le score de gauche
                     if penalty_matrix[i, j-1] == 1 :
                          left= transformed_matrix[i][j-1] 
-                    else: # sinon score + penalité
+                    else: # else score + penalty
                         left = transformed_matrix[i][j-1] +  penalty_matrix[i, j-1]
                         
-                    # si pas de penalité au top ..... score du haut
+                    # if there isn't penalty in top : take top score
                     if penalty_matrix [i-1][ j] == 1 :
                         
                         top = transformed_matrix[i-1][j] 
-                    else: # sinon ... + penalité
+                    else:
+                        # penalty
                         top =transformed_matrix[i-1][j] + penalty_matrix [i-1][ j]
                         
-                       # pas de penalité 
+                    # no penalty
                     diagonal = transformed_matrix[i-1][j-1] + dot_matrix[i-1][j-1]
         # -------
         # ------- Check if it's gap opening or gap extension          
-                    #si max c'est left alors prend left et si c'est 1 dans la penality matrix alors c'est ouverture de gap
+                    # if left is max and if it's 1 in penalty matrix : gap opening 
                     max_val = max(top, left, diagonal)
                     if max_val == left:
-                        transformed_matrix[i,j] = left                        
+                        transformed_matrix[i,j] = left    
+                                            
                         if penalty_matrix[i, j-1] == 1:
                             penalty_matrix[i,j] = open_gap
                         
-                        else: # sinon c'est extension de gap
+                        else: # else it's a gap extension
                             penalty_matrix[i,j] = extension_gap
                     
-                    elif max_val == top: # si le max c'est top et que 1 dans penlty alors ouverture
+                    elif max_val == top: # if top is max and if it's 1 in penalty matrix : gap opening 
                         transformed_matrix[i,j] = top
+                        
                         if penalty_matrix[i-1, j] == 1:
                             penalty_matrix[i,j] = open_gap
                         
-                        else: # sinon extension
+                        else:  # else it's a gap extension
                             penalty_matrix[i,j] = extension_gap
                     
                     else:
