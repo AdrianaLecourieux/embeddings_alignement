@@ -148,7 +148,7 @@ cd ../results
 * gap penalty fixed to 0:
 ```SHELL
 cd src/
-python main.py -emb1 ../data/embeddings/6PF2K_1bif.t5emb -emb2 ../data/embeddings/5_3_exonuclease_1bgxt.t5em -f1 ../data/fasta_sequences/6PF2K_1BIF.fasta -f2 ../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta -m global
+python main.py -emb1 ../data/embeddings/6PF2K_1bif.t5emb -emb2 ../data/embeddings/5_3_exonuclease_1bgxt.t5emb -f1 ../data/fasta_sequences/6PF2K_1BIF.fasta -f2 ../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta -m global
 ```
 * affine gap penalty (with the penalties: -1 for a gap opening and 0 for a gap extension):
 ```SHELL
@@ -160,7 +160,7 @@ python main.py -emb1 ../data/embeddings/6PF2K_1bif.t5emb -emb2 ../data/embedding
 * gap penalty fixed to 0:
 ```SHELL
 cd src/
-python main.py -emb1 ../data/embeddings/6PF2K_1bif.t5emb -emb2 ../data/embeddings/5_3_exonuclease_1bgxt.t5emb -f1 ../data/fasta_sequences/6PF2K_1BIF.fasta -f2 ../data/fasta_sequences/6PF2K_1BIF.fasta -m local
+python main.py -emb1 ../data/embeddings/6PF2K_1bif.t5emb -emb2 ../data/embeddings/5_3_exonuclease_1bgxt.t5emb -f1 ../data/fasta_sequences/6PF2K_1BIF.fasta -f2 ../data/fasta_sequences/5_3_EXONUCLEASE_1BGXT.fasta -m local
 ```
 * affine gap penalty (with the penalties: -1 for a gap opening and 0 for a gap extension):
 ```SHELL
