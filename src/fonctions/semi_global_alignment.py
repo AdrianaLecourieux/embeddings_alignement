@@ -275,4 +275,4 @@ def transformation_semi_global_gp(dot_matrix, seq1, seq2):
                         penalty_matrix[i,j] = 1             
 
             
-    return(np.matrix(transformed_matrix)) 
+    return(np.matrix(transformed_matrix))  

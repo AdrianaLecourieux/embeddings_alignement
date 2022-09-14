@@ -14,9 +14,6 @@ from fonctions import smith_waterman as SW
 from fonctions import semi_global_alignment as SG
 from fonctions import save_output
 
-
-# python main.py -emb1 adk_2ak3a.t5emb -emb2 6PF2K_1bif.t5emb -f1 ADK_2AK3A.fasta -f2 6PF2K_1BIF.fasta -m global
-
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()

@@ -262,4 +262,4 @@ def transformation_NW_affine_gap_penalty(dot_matrix, seq1, seq2):
                         transformed_matrix[i][j] = diagonal
                         penalty_matrix[i,j] = 1                               
         # -------       
-    return(np.matrix(transformed_matrix)) 
+    return(np.matrix(transformed_matrix))  

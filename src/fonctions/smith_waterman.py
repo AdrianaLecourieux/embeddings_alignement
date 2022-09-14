@@ -27,13 +27,11 @@ def transformation_SW(dot_matrix, seq1, seq2):
         New matrix completed from the Smith and Waterman algorithm 
     """
     # Creation of the transformed matrix
-    # print(dot_matrix.shape)
+
     row_seq = len(seq2) + 1
     col_seq = len(seq1) + 1
     transformed_matrix= np.zeros((row_seq, col_seq),dtype = int)
-    # print(row_seq1, col_seq2)
-    # print(transformed_matrix.shape)
-    # print(transformed_matrix)
+ 
     for i in range(1,row_seq):
         
             for j in range(1,col_seq):

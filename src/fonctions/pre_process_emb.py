@@ -32,6 +32,6 @@ def read_embedding(file_emb):
 
 
 
-
+ 
 
     

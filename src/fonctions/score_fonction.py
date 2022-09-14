@@ -28,4 +28,4 @@ def dot_product(emb1_list, emb2_list):
     calcul_dot_product = np.dot(emb2_list, np.array(emb1_list).T) 
 
     return(calcul_dot_product)
-  
+   

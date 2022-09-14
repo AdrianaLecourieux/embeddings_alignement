@@ -31,7 +31,7 @@ def read_fasta(fasta_file):
         list_fasta = list(line_in_fasta)
         
     return(list_fasta) 
-
+ 
 
 
 

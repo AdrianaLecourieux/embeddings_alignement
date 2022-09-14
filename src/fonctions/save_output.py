@@ -53,7 +53,7 @@ def save_in_txt_gp(seq1, seq2, alignment_method, seq_aligned_list):
         name of the alignment method given in argument
     seq_aligned_list: list
         list of alignments
-            
+               
     Returns
     -------
     Returns nothing but print a message
