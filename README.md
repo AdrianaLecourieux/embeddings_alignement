@@ -2,7 +2,7 @@
 
 The aim of this project is to create an embedding alignment program by dynamic programming. The scalar products of each vector between embeddings are calculated and used as a score matrix. Then, the transformed matrix is filled according to the chosen alignment and gap penalties. The alignments are generated as output and are saved in a .txt file.  
 
-Three algorithm are available :
+Three algorithms are available :
 * global (Needleman and Wunsch)
 * local (Smith and Waterman) 
 * semi-global
