@@ -7,7 +7,7 @@ Three algorithms are available :
 * local (Smith and Waterman) 
 * semi-global
 
-By default, gap penalties are set to zero
+By default gap penalties are set to zero but you can choose an affine gap penalty (-1 for a gap opening and 0 for a gap extension)
 
 ## 	:zero: Prerequisites
 
